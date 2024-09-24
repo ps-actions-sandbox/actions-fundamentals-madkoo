@@ -1,0 +1,17 @@
+name: Test Docker Hello world
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: ./hello-world-docker-action
+      with:
+        who-to-greet: "@madkoo"
+      id: docker-action
+    - run: echo ${{steps.docker-action.outputs.time}}
+    
