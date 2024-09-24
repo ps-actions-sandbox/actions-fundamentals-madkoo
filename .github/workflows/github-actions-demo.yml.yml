@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: main
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        type: environment
+        required: true
   schedule:
     - cron: '15 6 * * 0'
 
@@ -24,7 +29,14 @@ jobs:
          run: |
           echo "The repository ${{ github.repository }} contains the following files:"
           tree
-    
-
+          
+  Deploy:
+    name: Deploy-${{ inputs.environment}}
+    environment:
+      name: ${{ inputs.environment}}
+    runs-on: ubuntu-latest
+    needs: Build
+    steps:
+      - run: echo "deploy this "
   
     
