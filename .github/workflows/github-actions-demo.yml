@@ -29,14 +29,36 @@ jobs:
          run: |
           echo "The repository ${{ github.repository }} contains the following files:"
           tree
-          
+  Test:
+    name: Test
+    environment: Test
+    needs: Build
+    runs-on: ubuntu-latest
+    if: ${{github.event_name == "workflow_dispatch"}}
+    steps:
+    - run: echo "Testing..."
+    
+  Load-Test:
+    name: Load-Test
+    environment: Load-Test
+    needs: Build
+    runs-on: ubuntu-latest
+    if: ${{github.event_name == "workflow_dispatch"}}
+    steps:
+    - run: echo "Testing..."
+    
   Deploy:
     name: Deploy-${{ inputs.environment}}
     environment:
       name: ${{ inputs.environment}}
+      url: "https://writeabout.net"
     runs-on: ubuntu-latest
-    needs: Build
+    needs: [Test, Load-Test]
     steps:
-      - run: echo "deploy this "
+      - run: echo "Step x deploying... "
+      - run: echo "Step x deploying... "
+      - run: echo "Step x deploying... "
+      - run: echo "Step x deploying... "
+      - run: echo "Step x deploying... "
   
     
